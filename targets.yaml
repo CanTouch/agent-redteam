@@ -1,0 +1,26 @@
+# Allowlist of TEST COPIES ONLY. The CLI refuses any URL that is not listed here.
+# Secrets never go in this file: use ${VAR} in headers and put VAR=... in .env (gitignored).
+targets:
+  - name: mock
+    url: http://127.0.0.1:8765/webhook     # python -m redteam.mock_target
+    method: POST
+    headers:
+      Content-Type: application/json
+    body_template:
+      message: "{{message}}"
+      sessionId: redteam-mock
+    response_path: 0.output                  # n8n default: [{"output": "..."}]
+    canaries: [CANARY-7731, CANARY-KEY-4410]
+
+  # Example n8n test copy (uncomment and edit). Use the TEST webhook of a DUPLICATED workflow.
+  # - name: sms-bot-test
+  #   url: https://your-n8n.example.com/webhook-test/redteam-sms-bot
+  #   method: POST
+  #   headers:
+  #     Content-Type: application/json
+  #     X-Redteam-Token: ${N8N_TEST_TOKEN}
+  #   body_template:
+  #     message: "{{message}}"
+  #     from: "+15550000000"
+  #   response_path: 0.output
+  #   canaries: [CANARY-7731]
